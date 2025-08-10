@@ -42,3 +42,22 @@ be stored.
   should be sent in the body of the PATCH request, as a object:
   `{ likes: 10 }`), to update the toy on the server. Clicking on the button
   should also increase the number of likes on the DOM.
+
+# React Hooks Toy Tales (Vite)
+
+React app with **full CRUD** for toy collection.
+
+## Features
+- Load toys on mount  
+- Add toy (POST, likes=0)  
+- Like toy (PATCH, +1)  
+- Delete toy (DELETE)  
+- Fallback image (`rex.png`)  
+- All tests pass
+
+## Run
+```bash
+npm install
+npm run server
+npm run dev
+npm run test
