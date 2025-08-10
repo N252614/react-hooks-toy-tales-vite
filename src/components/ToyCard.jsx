@@ -1,17 +1,32 @@
 import React from "react";
 
-function ToyCard() {
+/**
+ * Displays a single toy card with its image, like count,
+ * and action buttons (Like, Donate).
+ */
+function ToyCard({ toy, onLike, onDelete }) {
+  const { id, name, image, likes } = toy;
+
   return (
     <div className="card" data-testid="toy-card">
-      <h2>{"" /* Toy's Name */}</h2>
-      <img
-        src={"" /* Toy's Image */}
-        alt={"" /* Toy's Name */}
-        className="toy-avatar"
-      />
-      <p>{"" /* Toy's Likes */} Likes </p>
-      <button className="like-btn">Like {"<3"}</button>
-      <button className="del-btn">Donate to GoodWill</button>
+      {/* Toy name */}
+      <h2>{name}</h2>
+
+      {/* Toy image */}
+      <img src={image} alt={name} className="toy-avatar" />
+
+      {/* Note the trailing space after 'Likes' to satisfy the test */}
+      <p>{likes} Likes </p>
+
+      {/* Pass both id and current likes to the like handler */}
+      <button className="like-btn" onClick={() => onLike(id, likes)}>
+        Like &lt;3
+      </button>
+
+      {/* Button text must be exactly 'Donate to GoodWill' per tests */}
+      <button className="del-btn" onClick={() => onDelete(id)}>
+        Donate to GoodWill
+      </button>
     </div>
   );
 }
