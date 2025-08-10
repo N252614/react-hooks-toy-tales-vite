@@ -2,38 +2,26 @@ import React, { useState } from "react";
 
 /**
  * Controlled form for creating a new toy.
- * Delegates the actual POST to the parent via `onAddToy`.
+ * The parent (App) performs the actual POST via `onAddToy`.
  */
 function ToyForm({ onAddToy }) {
   // Local controlled inputs for name and image URL
-  const [formData, setFormData] = useState({
-    name: "",
-    image: "",
-  });
+  const [formData, setFormData] = useState({ name: "", image: "" });
 
-  // Update local state when user types
+  // Update local state when the user types
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  // Submit handler: prevent reload, validate, call parent
+  // Submit handler: prevent reload, validate, and delegate to parent
   function handleSubmit(e) {
     e.preventDefault();
+    // Basic guard: avoid empty submissions
+    if (!formData.name.trim() || !formData.image.trim()) return;
 
-    const trimmed = {
-      name: formData.name.trim(),
-      image: formData.image.trim(),
-    };
-
-    // Basic guard: require both fields
-    if (!trimmed.name || !trimmed.image) return;
-
-    // Let the parent (App) perform the POST and state update
-    onAddToy(trimmed);
-
-    // Reset inputs after successful submit
-    setFormData({ name: "", image: "" });
+    onAddToy(formData); // parent will POST and set likes: 0
+    setFormData({ name: "", image: "" }); // reset the form
   }
 
   return (
@@ -48,7 +36,6 @@ function ToyForm({ onAddToy }) {
           className="input-text"
           value={formData.name}
           onChange={handleChange}
-          required
         />
         
 
@@ -60,7 +47,6 @@ function ToyForm({ onAddToy }) {
           className="input-text"
           value={formData.image}
           onChange={handleChange}
-          required
         />
         
 

@@ -1,19 +1,17 @@
 import React from "react";
 import ToyCard from "./ToyCard";
 
-/**
- * Renders the collection of ToyCard components.
- * Receives the toy list and action handlers from App.
- */
-function ToyContainer({ toys, onDeleteToy, onLikeToy }) {
+function ToyContainer({ toys, onLike, onDelete }) {
+  // Render the collection of cards (each must have a stable key)
   return (
     <div id="toy-collection">
       {toys.map((toy) => (
         <ToyCard
           key={toy.id}
           toy={toy}
-          onDelete={onDeleteToy}
-          onLike={onLikeToy}
+          // Pass bound handlers so the card doesn’t need to know the id shape
+          onLike={() => onLike(toy.id)}
+          onDelete={() => onDelete(toy.id)}
         />
       ))}
     </div>

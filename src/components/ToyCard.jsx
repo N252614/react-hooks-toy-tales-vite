@@ -1,30 +1,31 @@
 import React from "react";
 
 /**
- * Displays a single toy card with its image, like count,
- * and action buttons (Like, Donate).
+ * Presentational card for a single toy.
+ * Receives pre-bound handlers from the parent:
+ * - onLike(): increments likes for this toy
+ * - onDelete(): deletes this toy
+ * The parent already binds the toy id, so we just call the functions.
  */
 function ToyCard({ toy, onLike, onDelete }) {
-  const { id, name, image, likes } = toy;
-
   return (
     <div className="card" data-testid="toy-card">
       {/* Toy name */}
-      <h2>{name}</h2>
+      <h2>{toy.name}</h2>
 
       {/* Toy image */}
-      <img src={image} alt={name} className="toy-avatar" />
+      <img src={toy.image} alt={toy.name} className="toy-avatar" />
 
-      {/* Note the trailing space after 'Likes' to satisfy the test */}
-      <p>{likes} Likes </p>
+      {/* NOTE: tests expect a trailing space after 'Likes' */}
+      <p>{toy.likes} Likes </p>
 
-      {/* Pass both id and current likes to the like handler */}
-      <button className="like-btn" onClick={() => onLike(id, likes)}>
+      {/* Call the pre-bound like handler */}
+      <button className="like-btn" onClick={onLike}>
         Like &lt;3
       </button>
 
-      {/* Button text must be exactly 'Donate to GoodWill' per tests */}
-      <button className="del-btn" onClick={() => onDelete(id)}>
+      {/* Exact text required by tests ('GoodWill' with capital W) */}
+      <button className="del-btn" onClick={onDelete}>
         Donate to GoodWill
       </button>
     </div>
